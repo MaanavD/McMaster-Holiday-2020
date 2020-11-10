@@ -8,8 +8,7 @@ export default function Description() {
 
   return (
     <>
-      Visualizing <b>{`"${config.keyword}"`}</b> Google Trends with{' '}
-      <Link link="REACT_GLOBE_GITHUB">react-globe</Link>
+      Visualizing <strong>McMaster students</strong> all around the world this holiday season.
     </>
   );
 }

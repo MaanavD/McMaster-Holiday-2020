@@ -4,7 +4,7 @@
  * react-globe: https://github.com/chrisrzhou/react-globe
  */
 export default {
-  keyword: 'covid + covid19 + coronavirus',
+  keyword: 'mcmaster',
   globeBackgroundTexture:
     'https://raw.githubusercontent.com/chrisrzhou/react-globe/main/textures/background.png',
   globeCloudsTexture:
@@ -12,7 +12,7 @@ export default {
   globeTexture:
     'https://raw.githubusercontent.com/chrisrzhou/react-globe/main/textures/globe_dark.jpg',
   options: {
-    ambientLightColor: '#b34444',
+    ambientLightColor: '#007096',
     ambientLightIntensity: 1,
     cameraAutoRotateSpeed: 0.01,
     cameraRotateSpeed: 0.2,
@@ -21,7 +21,7 @@ export default {
     focusAnimationDuration: 1000,
     globeCloudsOpacity: 0.1,
     globeGlowCoefficient: 0.1,
-    globeGlowColor: 'red',
+    globeGlowColor: 'yellow',
     globeGlowPower: 5,
     globeGlowRadiusScale: 0.2,
     pointLightIntensity: 3,

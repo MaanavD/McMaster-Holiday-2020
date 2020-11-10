@@ -22,7 +22,7 @@ export default function Overlay() {
       <Fade className="overlay" show={showOverlay}>
         <div className="header">
           <div>
-            <h2>Google Globe Trends</h2>
+            <h2>McMaster Holiday Map</h2>
             <div className="overlay-subtitle">
               <Description />
             </div>

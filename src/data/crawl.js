@@ -1,12 +1,26 @@
 import countryReverseGeoCoding from 'country-reverse-geocoding';
+import Geocode from "react-geocode";
+global.fetch = require("node-fetch");
+
 import fs from 'fs';
 import googleTrends from 'google-trends-api';
+
 import moment from 'moment';
+import Firebase from "firebase";
 
-import config from '../config';
+let cfgkeyword = "mcmaster"
+let config = {
+  apiKey: "AIzaSyCdHNzrvVGcRDsmd2V0h1Y2wlMlf0FNutE",
+  authDomain: "mcmasterholiday2020.firebaseapp.com",
+  databaseURL: "https://mcmasterholiday2020.firebaseio.com",
+  projectId: "mcmasterholiday2020",
+  storageBucket: "mcmasterholiday2020.appspot.com",
+  messagingSenderId: "747019401291"
+};
 
-const reverseGeocode = countryReverseGeoCoding.country_reverse_geocoding();
-
+if (!Firebase.apps.length) {
+  Firebase.initializeApp(config);
+}
 const ISO_3_TO_2 = {
   AFG: 'AF',
   ALA: 'AX',
@@ -257,6 +271,50 @@ const ISO_3_TO_2 = {
   ZWE: 'ZW',
 };
 
+const reverseGeocode = countryReverseGeoCoding.country_reverse_geocoding();
+
+// function getUserData() {
+//   let ref = Firebase.database().ref("/location");
+//   ref.on("value", snapshot => {
+//     let p = snapshot.val()
+//     Object.values(p).forEach(val => {
+//       const trends = [];
+//       var lat = val.latitude
+//       var long = val.longitude
+//       const country = reverseGeocode.get_country(lat, long);
+//       const countryCode = ISO_3_TO_2[country?.code];
+//       Geocode.setApiKey("AIzaSyBUvdk9G80gwkj9rxSPeXeKpFgaj9hlt70");
+//       Geocode.fromLatLng(lat, long).then(
+//         response => {
+//           const address = response.results[0].formatted_address;
+//           console.log(address);
+//         },
+//         error => {
+//           console.error("weewoo"+error);
+//         }
+//       );
+//       console.log(lat, long, country.name, countryCode)
+
+//       // if (countryCode) {
+//       //   trends.push({
+//       //     id: `${lat}-${long}`,
+//       //     city: geoName,
+//       //     countryCode,
+//       //     countryName: country.name,
+//       //     coordinates: [lat, long],
+//       //     value: 1
+//       //   });
+//       // }
+
+//       // console.log(trends)
+//     });
+//   });
+//   return trends
+// };
+
+
+
+
 function sortNumericDescending(a, b) {
   return b.value - a.value;
 }
@@ -289,6 +347,7 @@ async function getRelatedTopics({ keyword, geo }) {
 }
 
 async function getTrends({ keyword }) {
+  // return getUserData()
   console.log(`Getting trends for "${keyword}" `);
   return googleTrends
     .interestByRegion({
@@ -357,4 +416,4 @@ async function buildData(keyword) {
   });
 }
 
-buildData(config.keyword);
+buildData(cfgkeyword);

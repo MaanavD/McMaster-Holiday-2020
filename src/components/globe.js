@@ -19,35 +19,82 @@ function random(scaleFactor) {
     : -scaleFactor * Math.random();
 }
 
+const randomMaterial = () => {
+  const val = Math.floor(Math.random() * (6));
+  switch(val){
+    case(0):
+      return new THREE.MeshBasicMaterial( {
+        color: "#7A003C",
+        side: THREE.DoubleSide,
+      });
+    case(1):
+      return new THREE.MeshBasicMaterial( {
+        color: "#FDBF57",
+        side: THREE.DoubleSide,
+      });
+    case(2):
+      return new THREE.MeshBasicMaterial( {
+        color: "#5E6A71",
+        side: THREE.DoubleSide,
+      });
+    case(3): 
+      return new THREE.MeshBasicMaterial( {
+        color: "#D2D755",
+        side: THREE.DoubleSide,
+      });
+    case(4): 
+      return new THREE.MeshBasicMaterial( {
+        color: "#8BD3E6",
+        side: THREE.DoubleSide,
+      });
+    case(5):
+      return new THREE.MeshBasicMaterial( {
+        color: "#FFD100",
+        side: THREE.DoubleSide,
+      });
+  }
+}
+
 function markerRenderer(marker) {
   // instantiate a loader
-  const svgMarkup = document.querySelector('svg').outerHTML;
-
+  const value = marker.value == 0? 0.35 : marker.value * 0.1
+  // const value = marker.value
+  const svgMarkup = document.querySelectorAll('svg')[0].outerHTML;
+  const svgHoles = document.querySelectorAll('svg')[1].outerHTML;
   const loader = new SVGLoader();
   const svgData = loader.parse(svgMarkup);
+  const dataHoles = loader.parse(svgHoles);
   
   // Group that will contain all of our paths
   const svgGroup = new THREE.Group();
-  
-  const material = new THREE.MeshBasicMaterial( {
-    color: "maroon",
-    side: THREE.DoubleSide,
-    depthWrite: true
-  } );
+  svgGroup.scale.y *= -1;
+  svgGroup.scale.x *= -1;
+  svgGroup.scale.x *= (value > 2 ? 2: value)
+  svgGroup.scale.y *= (value > 2 ? 2 : value)
+  const material = randomMaterial();
+  // material.color: 
+    // wireframe: true
   
   // Loop through all of the parsed paths
   svgData.paths.forEach((path, i) => {
+    
     const shapes = path.toShapes(true);
-  
     // Each path has array of shapes
     shapes.forEach((shape) => {
       // Finally we can take each shape and extrude it
       // const geometry = new THREE.Geometry(shape);
-  
+      console.log(dataHoles);
+      dataHoles.paths.forEach(hole => {
+        const holes = hole.toShapes(true);
+        holes.forEach(h => {
+          shape.holes.push(h)
+        })
+      })
+      console.log(shape.holes)
       // Create a mesh and add it to the group
-      const geometry = new THREE.ShapeBufferGeometry( shape );
+      const geometry = new THREE.ExtrudeGeometry(shape, {depth: 5, bevelEnabled: false});
       const mesh = new THREE.Mesh(geometry, material);
-  
+      
       svgGroup.add(mesh);
     });
   });

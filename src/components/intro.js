@@ -45,8 +45,12 @@ export default function Intro() {
       <p>
         <Description />
       </p>
+      
       <Fade show={hasLoaded}>
+        
         <Button label="Add your Location!" onClick={() => addLocation()} /> &nbsp;&nbsp;&nbsp;
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname"/>
         <Button label="Explore" onClick={() => dispatch({ type: 'START' })} />
       </Fade>
     </Fade>

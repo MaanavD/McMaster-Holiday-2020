@@ -6,6 +6,7 @@ import About from './about';
 import Description from './description';
 import Fade from './fade';
 import Link from './link';
+import YouTube from 'react-youtube';
 
 export default function Overlay() {
   const [
@@ -15,7 +16,15 @@ export default function Overlay() {
   const [showAbout, setShowAbout] = useState(false);
 
   const showOverlay = start && !showAbout && !focusedMarker;
-
+  const opts = {
+    height: '500',
+    width: '720',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
+  
   return (
     <>
       <About onHide={() => setShowAbout(false)} show={showAbout} />
@@ -35,19 +44,16 @@ export default function Overlay() {
           </div>
         </div>
         <div className="content">
-          TOP 5 SEARCHING CITIES
-          {markers.slice(0, 5).map((marker) => (
-            <Link key={marker.city}>
-              <h2 onClick={() => dispatch({ type: 'FOCUS', payload: marker })}>
-                {marker.city} ({marker.value})
-              </h2>
-            </Link>
-          ))}
+          Intro Video
+          <YouTube videoId="2g811Eo7K8U" opts={opts} onReady={event => event.target.pauseVideo()}/>
+          
         </div>
         <div className="footer">
           Updated on {moment(lastUpdated).format('MMM D, YYYY')}
         </div>
       </Fade>
     </>
+    
   );
+  
 }

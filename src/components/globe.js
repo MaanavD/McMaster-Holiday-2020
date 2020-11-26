@@ -20,7 +20,7 @@ function random(scaleFactor) {
 }
 
 const randomMaterial = () => {
-  const val = Math.floor(Math.random() * (6));
+  const val = Math.floor(Math.random() * (5));
   switch(val){
     case(0):
       return new THREE.MeshBasicMaterial( {
@@ -32,22 +32,17 @@ const randomMaterial = () => {
         color: "#FDBF57",
         side: THREE.DoubleSide,
       });
-    case(2):
-      return new THREE.MeshBasicMaterial( {
-        color: "#5E6A71",
-        side: THREE.DoubleSide,
-      });
-    case(3): 
+    case(2): 
       return new THREE.MeshBasicMaterial( {
         color: "#D2D755",
         side: THREE.DoubleSide,
       });
-    case(4): 
+    case(3): 
       return new THREE.MeshBasicMaterial( {
         color: "#8BD3E6",
         side: THREE.DoubleSide,
       });
-    case(5):
+    case(4):
       return new THREE.MeshBasicMaterial( {
         color: "#FFD100",
         side: THREE.DoubleSide,
@@ -57,7 +52,7 @@ const randomMaterial = () => {
 
 function markerRenderer(marker) {
   // instantiate a loader
-  const value = marker.value == 0? 0.35 : marker.value * 0.1
+  const value = marker.value <= 3? 0.35 : marker.value * 0.1
   // const value = marker.value
   const svgMarkup = document.querySelectorAll('svg')[0].outerHTML;
   const svgHoles = document.querySelectorAll('svg')[1].outerHTML;
@@ -83,14 +78,12 @@ function markerRenderer(marker) {
     shapes.forEach((shape) => {
       // Finally we can take each shape and extrude it
       // const geometry = new THREE.Geometry(shape);
-      console.log(dataHoles);
       dataHoles.paths.forEach(hole => {
         const holes = hole.toShapes(true);
         holes.forEach(h => {
           shape.holes.push(h)
         })
       })
-      console.log(shape.holes)
       // Create a mesh and add it to the group
       const geometry = new THREE.ExtrudeGeometry(shape, {depth: 5, bevelEnabled: false});
       const mesh = new THREE.Mesh(geometry, material);

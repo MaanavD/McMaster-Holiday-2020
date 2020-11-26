@@ -26,6 +26,7 @@ export default function Intro() {
     if (navigator.geolocation ) {
       navigator.geolocation.getCurrentPosition(getPosition);
     }
+    alert("Thanks for adding your location! Go ahead and explore the globe.")
   }
   
   function getPosition(position) {
@@ -47,10 +48,7 @@ export default function Intro() {
       </p>
       
       <Fade show={hasLoaded}>
-        
         <Button label="Add your Location!" onClick={() => addLocation()} /> &nbsp;&nbsp;&nbsp;
-        <label for="fname">First name:</label>
-        <input type="text" id="fname" name="fname"/>
         <Button label="Explore" onClick={() => dispatch({ type: 'START' })} />
       </Fade>
     </Fade>

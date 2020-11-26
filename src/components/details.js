@@ -28,8 +28,7 @@ export default function Details() {
   let content;
   if (focusedMarker) {
     const { city, countryCode, countryName, value } = focusedMarker;
-    const url = getSearchUrl(city, countryName, config.keyword);
-    const topics = relatedTopics[countryCode] || [];
+    const url = "https://mcmasterengineering.capsule.video/";
 
     content = (
       <>
@@ -48,8 +47,8 @@ export default function Details() {
             {city}, {countryName} ({value})
           </h2>
           <div className="details-content">
-            RELATED TOPICS
-            {topics.map(({ topic, link }) => {
+            {/* RELATED TOPICS */}
+            {/* {topics.map(({ topic, link }) => {
               return (
                 <a
                   key={topic}
@@ -59,10 +58,10 @@ export default function Details() {
                   {topic}
                 </a>
               );
-            })}
+            })} */}
           </div>
           <Button
-            label="View search results"
+            label="View Mac Eng on Capsule"
             onClick={() => window.open(url, '_blank')}
           />
         </div>

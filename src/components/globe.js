@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import ReactGlobe, { tween } from 'react-globe';
+import ReactGlobe from 'react-globe';
 import * as THREE from 'three';
 import { SVGLoader }  from "three/examples/jsm/loaders/SVGLoader";
 
 import { useStateValue } from '../state';
 import Fade from './fade';
-import fireball from './Fireball.svg';
+// import fireball from './Fireball.svg';
 
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/scale.css';
 
-const MARKER_COLOR = '#7A003C';
-const MARKER_COMPANION_COLOR = '#fff9e6';
-
-function random(scaleFactor) {
-  return Math.random() > 0.5
-    ? scaleFactor * Math.random()
-    : -scaleFactor * Math.random();
-}
+// const MARKER_COLOR = '#7A003C';
+// const MARKER_COMPANION_COLOR = '#fff9e6';
 
 const randomMaterial = () => {
   const val = Math.floor(Math.random() * (5));
@@ -43,6 +37,11 @@ const randomMaterial = () => {
         side: THREE.DoubleSide,
       });
     case(4):
+      return new THREE.MeshBasicMaterial( {
+        color: "#FFD100",
+        side: THREE.DoubleSide,
+      });
+    default:
       return new THREE.MeshBasicMaterial( {
         color: "#FFD100",
         side: THREE.DoubleSide,
@@ -87,7 +86,6 @@ function markerRenderer(marker) {
       // Create a mesh and add it to the group
       const geometry = new THREE.ExtrudeGeometry(shape, {depth: 5, bevelEnabled: false});
       const mesh = new THREE.Mesh(geometry, material);
-      
       svgGroup.add(mesh);
     });
   });

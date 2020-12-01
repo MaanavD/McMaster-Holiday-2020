@@ -6,6 +6,10 @@ import Button from './button';
 import Description from './description';
 import Fade from './fade';
 
+import Geocode from "react-geocode";
+global.fetch = require("node-fetch");
+Geocode.setApiKey("AIzaSyBUvdk9G80gwkj9rxSPeXeKpFgaj9hlt70");
+
 export default function Intro() {
   const [{ hasLoaded, start }, dispatch] = useStateValue();
   let submitted = false;
@@ -23,21 +27,28 @@ export default function Intro() {
  }
   
   function addLocation() {
-    if (navigator.geolocation ) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(getPosition);
+      alert("Thanks for adding your location! Go ahead and explore the globe.")
     }
-    alert("Thanks for adding your location! Go ahead and explore the globe.")
+    if (submitted === true){
+      alert("You have already added your location. Thanks for contributing to our 2020 Holiday map.")
+    }
+    
   }
   
-  function getPosition(position) {
+  async function getPosition(position) {
     const place = {"latitude": position.coords.latitude, "longitude": position.coords.longitude}
+    let city = await Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(res => {
+      return res.results[0].formatted_address.split(',')[1].replace(/\s/g, '');
+    })
+    place.city = city;
     if (!submitted){
       Firebase.database()
       .ref("/location")
       .push(place);
       submitted = true;
     }
-
   };
   
   return (

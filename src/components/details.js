@@ -4,12 +4,12 @@ import { useStateValue } from '../state';
 import Button from './button';
 import Fade from './fade';
 
-function getSearchUrl(city, country, keyword) {
-  const formattedQuery = `${encodeURIComponent(city)}, ${encodeURIComponent(
-    country,
-  )} ${encodeURIComponent(keyword)}`.replace(/(%20| )/g, '+');
-  return `https://www.google.com/search?q=${formattedQuery}`;
-}
+// function getSearchUrl(city, country, keyword) {
+//   const formattedQuery = `${encodeURIComponent(city)}, ${encodeURIComponent(
+//     country,
+//   )} ${encodeURIComponent(keyword)}`.replace(/(%20| )/g, '+');
+//   return `https://www.google.com/search?q=${formattedQuery}`;
+// }
 
 export function getRandomMarker({ focusedMarker, markers }) {
   const filteredMarkers = markers.filter((marker) => {
@@ -20,14 +20,14 @@ export function getRandomMarker({ focusedMarker, markers }) {
 
 export default function Details() {
   const [
-    { config, focusedMarker, markers, relatedTopics },
+    { focusedMarker, markers},
     dispatch,
   ] = useStateValue();
   const randomMarker = getRandomMarker({ focusedMarker, markers });
 
   let content;
   if (focusedMarker) {
-    const { city, countryCode, countryName, value } = focusedMarker;
+    const { city, countryName, value } = focusedMarker;
     const url = "https://mcmasterengineering.capsule.video/";
 
     content = (
@@ -47,18 +47,6 @@ export default function Details() {
             {city}, {countryName} ({value})
           </h2>
           <div className="details-content">
-            {/* RELATED TOPICS */}
-            {/* {topics.map(({ topic, link }) => {
-              return (
-                <a
-                  key={topic}
-                  href={`https://trends.google.com${link}`}
-                  rel="noopener noreferrer"
-                  target="_blank">
-                  {topic}
-                </a>
-              );
-            })} */}
           </div>
           <Button
             label="View Mac Eng on Capsule"

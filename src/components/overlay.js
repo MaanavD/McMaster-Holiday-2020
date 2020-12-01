@@ -1,5 +1,5 @@
   import moment from 'moment';
-  import React, { useState, useRef } from 'react';
+  import React, { useState } from 'react';
 
   import { useStateValue } from '../state';
   import About from './about';
@@ -12,8 +12,10 @@
 
   export default function Overlay() {
     const [
-      { focusedMarker, lastUpdated, markers, start },
-      dispatch,
+      // { focusedMarker, lastUpdated, markers, start },
+      // dispatch,
+      { focusedMarker, lastUpdated, start },
+      ,
     ] = useStateValue();
     const [showAbout, setShowAbout] = useState(false);
 
@@ -32,7 +34,7 @@
     let cElement = null;
     const _onReady = event => {
       cElement = event;
-      // event.target.playVideo();
+      event.target.pauseVideo();
     };
 
     const handleClickPlay= () => {

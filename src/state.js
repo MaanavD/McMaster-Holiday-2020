@@ -3,15 +3,17 @@ import React, { createContext, useContext, useReducer } from 'react';
 import config from './config';
 import data from './data/data.json';
 
-const { lastUpdated, relatedTopics, trends } = data;
+// const { lastUpdated, relatedTopics, trends } = data;
+const { lastUpdated, locations } = data;
+console.log(locations)
 
 export const initialState = {
   config,
   focusedMarker: null,
   hasLoaded: false,
   lastUpdated,
-  markers: trends,
-  relatedTopics,
+  markers: locations,
+  // relatedTopics,
   start: false,
 };
 
